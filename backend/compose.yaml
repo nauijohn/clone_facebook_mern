@@ -1,0 +1,48 @@
+name: backend
+
+services:
+  api:
+    container_name: api_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - 80:3000
+    environment:
+      - PORT=3000
+      - NODE_ENV=dev
+    env_file:
+      - ./.env.dev
+    develop:
+      watch:
+        - path: ./src
+          action: sync
+          target: /app/src
+    depends_on:
+      - mongodb
+    networks:
+      - api_network
+
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: facebook_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: volume
+        source: mongodb_data
+        target: /data/db
+    networks:
+      - api_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  api_network:

@@ -1,0 +1,45 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build2": "esbuild src/server.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/app.js",
+    "start2": "node dist/index.js",
+    "dev2": "nodemon src/index.ts",
+    "build": "vite build",
+    "dev3": "vite-node ./src/server.js",
+    "dev": "vite",
+    "start": "node dist/server.js",
+    "test": "vitest -w",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "John Anthony Naui",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.2",
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.4",
+    "@types/node": "^24.9.1",
+    "@types/supertest": "^6.0.3",
+    "dotenv": "^17.2.3",
+    "esbuild": "^0.25.11",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-node": "^3.2.4",
+    "vite-plugin-node": "^7.0.0",
+    "vitest": "^4.0.3"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "mongoose": "^8.19.2"
+  }
+}
