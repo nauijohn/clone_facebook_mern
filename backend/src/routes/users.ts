@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
 
-import { activateAccount, register } from "../controllers/users";
+import { activateAccount, login, register } from "../controllers/users";
 import { handle } from "./utils";
 
 const router = Router();
@@ -26,5 +26,7 @@ router.post(
 );
 
 router.post("/activate", handle(activateAccount));
+
+router.post("/login", handle(login));
 
 export default router;

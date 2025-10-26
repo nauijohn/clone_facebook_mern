@@ -19,8 +19,6 @@ export async function register(req: Request, res: Response) {
     gender,
   } = req.body;
 
-  console.log("Register...");
-
   const check = await User.findOne({ email });
   if (check) {
     return res.status(422).json({
@@ -65,8 +63,6 @@ export async function activateAccount(req: Request, res: Response) {
   const { token } = req.body;
   const user = jwt.verify(token, process.env.TOKEN_SECRET!) as { id: string };
 
-  console.log(user);
-
   const check = await User.findById(user.id);
   if (check?.verified) {
     return res.status(400).json({ message: "Email already activated." });
@@ -74,4 +70,35 @@ export async function activateAccount(req: Request, res: Response) {
 
   await User.findByIdAndUpdate(user.id, { verified: true });
   return res.json({ message: "Account has been activated successfully!" });
+}
+
+export async function login(req: Request, res: Response) {
+  console.log("login...");
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(401).json({
+      message: "Invalid credentials",
+    });
+  }
+
+  const check = bcrypt.compareSync(password, user.password);
+
+  if (!check) {
+    return res.status(401).json({
+      message: "Invalid credentials",
+    });
+  }
+
+  const token = generateToken({ id: user._id }, "7d");
+  return res.send({
+    id: user._id,
+    username: user.username,
+    picture: user.picture,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    token,
+    verified: user.verified,
+    message: "Register success! Please activate your email to start.",
+  });
 }
