@@ -1,0 +1,43 @@
+@host = http://localhost
+
+POST  {{host}}/api/users/register
+Content-Type: application/json
+
+{
+	"first_name": "john anthony",
+	"last_name": "naui",
+	"email": "cognutalti@necub.com",
+	"username": "anthonynaui",
+	"password": "test",
+	"bYear": "1993",
+	"bMonth": "6",
+	"bDay": "9",
+	"gender": "male"
+}
+
+
+###
+
+POST  {{host}}/api/users/activate
+Content-Type: application/json
+
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZmRhYmI5ZTg0ZjE2ODFjY2E0YjMwNyIsImlhdCI6MTc2MTQ1NTAzNiwiZXhwIjoxNzYyMDU5ODM2fQ.9xerg_dOxQy9hvBtNHy1evISCypbZyJLVkLQYGIN7gk"
+}
+
+###
+
+POST  {{host}}/api/users/login
+Content-Type: application/json
+
+{
+
+	"email": "cognutalti@necub.com",
+	"password": "test1"
+}
+
+
+
+###
+
+GET {{host}}/api
