@@ -11,6 +11,7 @@
     "dev3": "vite-node ./src/server.js",
     "dev": "vite",
     "start": "node dist/server.js",
+    "docker": "docker compose up --build --watch",
     "test": "vitest -w",
     "coverage": "vitest run --coverage"
   },

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { body } from "express-validator";
 
-import { register } from "../controllers/users";
-import { tryCatch } from "./utils";
+import { activateAccount, register } from "../controllers/users";
+import { handle } from "./utils";
 
 const router = Router();
 
@@ -22,7 +22,9 @@ router.post(
     body("bDay").isInt({ min: 1, max: 31 }).withMessage("Invalid birth day"),
     body("gender").notEmpty().withMessage("Gender is required"),
   ],
-  tryCatch(register)
+  handle(register)
 );
+
+router.post("/activate", handle(activateAccount));
 
 export default router;

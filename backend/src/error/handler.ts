@@ -6,5 +6,6 @@ export default (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(500).json("test");
+  console.log("err: ", err);
+  res.status(500).json(err);
 };

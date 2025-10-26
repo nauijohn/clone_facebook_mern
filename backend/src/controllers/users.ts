@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { type Request, type Response } from "express";
+import jwt from "jsonwebtoken";
 
 import { sendVerificationEmail } from "../helpers/mailer";
 import { generateToken } from "../helpers/tokens";
@@ -18,8 +19,9 @@ export async function register(req: Request, res: Response) {
     gender,
   } = req.body;
 
+  console.log("Register...");
+
   const check = await User.findOne({ email });
-  console.log("check: ", check);
   if (check) {
     return res.status(422).json({
       message: "Email already exists.",
@@ -57,4 +59,19 @@ export async function register(req: Request, res: Response) {
     verified: user.verified,
     message: "Register success! Please activate your email to start.",
   });
+}
+
+export async function activateAccount(req: Request, res: Response) {
+  const { token } = req.body;
+  const user = jwt.verify(token, process.env.TOKEN_SECRET!) as { id: string };
+
+  console.log(user);
+
+  const check = await User.findById(user.id);
+  if (check?.verified) {
+    return res.status(400).json({ message: "Email already activated." });
+  }
+
+  await User.findByIdAndUpdate(user.id, { verified: true });
+  return res.json({ message: "Account has been activated successfully!" });
 }

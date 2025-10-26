@@ -54,7 +54,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema<IUser>(
       required: [true, "first name is required"],
       trim: true,
       text: true,
-      unique: true,
     },
     last_name: {
       type: String,
@@ -172,7 +171,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema<IUser>(
   }
 );
 
-userSchema.set("autoIndex", true);
+// userSchema.set("autoIndex", true);
 
 // 5️⃣ Model export
 const User = mongoose.model<IUser>("User", userSchema);
